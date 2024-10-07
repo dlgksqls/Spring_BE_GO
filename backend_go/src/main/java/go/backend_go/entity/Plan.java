@@ -2,11 +2,12 @@ package go.backend_go.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Entity @Getter
 public class Plan {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

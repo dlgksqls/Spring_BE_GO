@@ -1,10 +1,11 @@
 package go.backend_go.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@Entity
+@Entity @Getter
 public class Schedule {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

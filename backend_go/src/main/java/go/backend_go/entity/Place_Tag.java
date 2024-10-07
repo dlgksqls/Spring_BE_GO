@@ -1,8 +1,9 @@
 package go.backend_go.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
-@Entity
+@Entity @Getter
 public class Place_Tag {
 
     @Id @GeneratedValue

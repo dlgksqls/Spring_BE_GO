@@ -3,10 +3,11 @@ package go.backend_go.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-@Entity
+@Entity @Getter
 public class Review {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
