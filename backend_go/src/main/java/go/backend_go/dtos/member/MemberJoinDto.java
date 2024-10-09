@@ -1,4 +1,4 @@
-package go.backend_go.dtos;
+package go.backend_go.dtos.member;
 
 import lombok.Data;
 

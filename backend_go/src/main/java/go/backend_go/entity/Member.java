@@ -1,6 +1,7 @@
 package go.backend_go.entity;
 
-import go.backend_go.dtos.MemberJoinDto;
+import go.backend_go.dtos.member.MemberFixedDto;
+import go.backend_go.dtos.member.MemberJoinDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -30,11 +31,17 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Schedule> member_schedules = new ArrayList<>();
 
-    public void joinMember(MemberJoinDto dto){
+    public void join(MemberJoinDto dto){
         this.loginId = dto.getLoginId();
         this.password = dto.getPassword();
         this.username = dto.getUsername();
         this.email = dto.getEmail();
         this.joinDate = LocalDateTime.now();
+    }
+
+    public void update(MemberFixedDto dto){
+        this.loginId = dto.getLoginId();
+        this.password = dto.getPassword();
+        this.email = dto.getEmail();
     }
 }
