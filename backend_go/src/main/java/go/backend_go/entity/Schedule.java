@@ -17,7 +17,12 @@ public class Schedule {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "plan_id")
     private Plan plan;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "place_id")
+    private Place place;
 }

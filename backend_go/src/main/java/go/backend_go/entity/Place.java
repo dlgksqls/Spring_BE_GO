@@ -1,10 +1,10 @@
 package go.backend_go.entity;
 
+import go.backend_go.dtos.place.PlaceRegisterUpdateDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,30 +15,26 @@ public class Place {
     private Long id;
     @NotNull
     private String placeName;
-    @NotNull
+    //@NotNull
     private String info;
 //    private Image image;
 
     // 업종
-    @NotNull
+    //@NotNull
     private String classification;
     // 도로명 주소
-    @NotNull
+    //@NotNull
     private String streetNameAddr;
     // 주차 가능 여부
-    @NotNull
+    //@NotNull
     private boolean parking;
     // 전화 번호
-    @NotNull
+    //@NotNull
     private String call;
     // 경도
     private float hardness;
     // 위도
     private float latitude;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "schedule_id")
-    private Schedule schedule;
 
     @OneToOne(mappedBy = "place")
     private Plan plan;
@@ -51,4 +47,18 @@ public class Place {
 
     @OneToMany(mappedBy = "place")
     private List<User_Like> place_like_member = new ArrayList<>();
+
+    @OneToMany(mappedBy = "place")
+    private List<Schedule> place_schedule = new ArrayList<>();
+
+    public void saveAndUpdate(PlaceRegisterUpdateDto dto) {
+        this.placeName = dto.getPlaceName();
+        this.info = dto.getInfo();
+        this.classification = dto.getClassification();
+        this.streetNameAddr = dto.getStreetNameAddr();
+        this.parking = dto.isParking();
+        this.call = dto.getCall();
+        this.hardness = dto.getHardness();
+        this.latitude = dto.getLatitude();
+    }
 }
