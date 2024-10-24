@@ -1,10 +1,12 @@
 package go.backend_go.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import go.backend_go.dtos.tag.TagDto;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity @Getter
 public class Tag {
@@ -12,5 +14,13 @@ public class Tag {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @NotNull
+    private String tagName;
+
+    @OneToMany(mappedBy = "tag")
+    private List<Place_Tag> tag = new ArrayList<>();
+
+    public void saveTag(TagDto tagDto){
+        this.tagName = "#"+tagDto.getTagName();
+    }
 }

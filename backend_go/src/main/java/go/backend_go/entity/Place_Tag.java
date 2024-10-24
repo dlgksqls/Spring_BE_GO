@@ -14,6 +14,16 @@ public class Place_Tag {
     private Place place;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "plan_id")
-    private Plan plan;
+    @JoinColumn(name = "tag_id")
+    private Tag tag;
+
+    public Place_Tag(Place place, Tag tag) {
+        this.place = place;
+        this.tag = tag;
+    }
+
+    public Place_Tag() {
+
+    }
+//    public void PlaceSave()
 }

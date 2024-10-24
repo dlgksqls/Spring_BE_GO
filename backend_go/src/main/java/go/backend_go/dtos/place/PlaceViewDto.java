@@ -1,7 +1,10 @@
 package go.backend_go.dtos.place;
 
 import go.backend_go.entity.Place;
+import go.backend_go.entity.Place_Tag;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class PlaceViewDto {
@@ -13,6 +16,7 @@ public class PlaceViewDto {
         this.streetNameAddr = place.getStreetNameAddr();
         this.parking = place.isParking();
         this.call = place.getCall();
+        this.tags = place.getPlace_tag();
     }
 
     private String placeName;
@@ -21,4 +25,5 @@ public class PlaceViewDto {
     private String streetNameAddr;
     private boolean parking;
     private String call;
+    private List<Place_Tag> tags;
 }

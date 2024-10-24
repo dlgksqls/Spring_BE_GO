@@ -60,5 +60,14 @@ public class Place {
         this.call = dto.getCall();
         this.hardness = dto.getHardness();
         this.latitude = dto.getLatitude();
+
+        updateTag(dto.getPlace_tag());
+    }
+
+    private void updateTag(List<Tag> tags){
+        for (Tag tag : tags) {
+            Place_Tag placeTag = new Place_Tag(this, tag);
+            this.place_tag.add(placeTag);
+        }
     }
 }
