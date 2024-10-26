@@ -3,7 +3,9 @@ package go.backend_go.controller;
 import go.backend_go.dtos.place.PlaceRegisterUpdateDto;
 import go.backend_go.dtos.place.PlaceViewDto;
 import go.backend_go.entity.Place;
+import go.backend_go.entity.Place_Tag;
 import go.backend_go.service.PlaceService;
+import go.backend_go.service.PlaceTagService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,7 @@ import java.util.List;
 public class PlaceController {
 
     private final PlaceService placeService;
+    private final PlaceTagService placeTagService;
 
     @GetMapping("/")
     public List<PlaceViewDto> viewPlaces(){
@@ -36,11 +39,13 @@ public class PlaceController {
 
         Place place = new Place();
 
-        boolean isSave = placeService.save(place, newPlace);
+        Place savePlace = placeService.save(place, newPlace);
 
-        if (!isSave){
+        if (savePlace == null){
             return HttpStatus.CONFLICT;
         }
+
+        placeTagService.savePlaceTag(savePlace, newPlace.getPlace_tag());
 
         return HttpStatus.CREATED;
     }

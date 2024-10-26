@@ -3,6 +3,7 @@ package go.backend_go.service;
 import go.backend_go.dtos.place.PlaceRegisterUpdateDto;
 import go.backend_go.dtos.place.PlaceViewDto;
 import go.backend_go.entity.Place;
+import go.backend_go.entity.Place_Tag;
 import go.backend_go.repository.PlaceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,16 +32,16 @@ public class PlaceService {
         return returnPlace;
     }
 
-    public boolean save(Place place, PlaceRegisterUpdateDto dto){
+    public Place save(Place place, PlaceRegisterUpdateDto dto){
 
         place.saveAndUpdate(dto);
 
         if (placeRepository.findByPlaceName(dto.getPlaceName()) != null){
-            return false;
+            return null;
         }
 
         placeRepository.save(place);
-        return true;
+        return place;
     }
 
     public PlaceRegisterUpdateDto update(Place place, PlaceRegisterUpdateDto dto){

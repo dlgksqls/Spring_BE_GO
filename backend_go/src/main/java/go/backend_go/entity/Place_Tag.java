@@ -1,7 +1,12 @@
 package go.backend_go.entity;
 
+import go.backend_go.dtos.place.PlaceRegisterUpdateDto;
+import go.backend_go.repository.PlaceTagRepository;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 
 @Entity @Getter
 public class Place_Tag {
@@ -25,5 +30,4 @@ public class Place_Tag {
     public Place_Tag() {
 
     }
-//    public void PlaceSave()
 }

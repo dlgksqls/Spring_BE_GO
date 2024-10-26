@@ -18,7 +18,7 @@ public class Tag {
     private String tagName;
 
     @OneToMany(mappedBy = "tag")
-    private List<Place_Tag> tag = new ArrayList<>();
+    private List<Place_Tag> place_tag = new ArrayList<>();
 
     public void saveTag(TagDto tagDto){
         this.tagName = "#"+tagDto.getTagName();
