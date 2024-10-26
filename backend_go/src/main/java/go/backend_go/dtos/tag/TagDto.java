@@ -11,6 +11,9 @@ public class TagDto {
         this.tagName = tag.getTagName();
     }
 
+    public TagDto(String tagName) {
+    }
+
     public TagDto() {
     }
 }

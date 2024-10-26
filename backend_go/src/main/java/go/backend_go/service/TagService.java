@@ -1,6 +1,8 @@
 package go.backend_go.service;
 
+import go.backend_go.dtos.tag.PlaceTagDto;
 import go.backend_go.dtos.tag.TagDto;
+import go.backend_go.entity.Place_Tag;
 import go.backend_go.entity.Tag;
 import go.backend_go.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
