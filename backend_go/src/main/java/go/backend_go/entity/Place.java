@@ -42,10 +42,10 @@ public class Place {
     @OneToMany(mappedBy = "place")
     private List<Review> place_reviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "place")
+    @OneToMany(mappedBy = "place", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Place_Tag> place_tag = new ArrayList<>();
 
-    @OneToMany(mappedBy = "place")
+    @OneToMany(mappedBy = "place", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<User_Like> place_like_member = new ArrayList<>();
 
     @OneToMany(mappedBy = "place")

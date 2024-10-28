@@ -67,4 +67,8 @@ public class PlaceService {
 
         return place;
     }
+
+    public void delete(String placeName) {
+        placeRepository.deleteByPlaceName(placeName);
+    }
 }

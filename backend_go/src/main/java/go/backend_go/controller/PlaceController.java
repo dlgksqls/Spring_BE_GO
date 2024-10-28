@@ -48,11 +48,20 @@ public class PlaceController {
     }
 
     @PostMapping("/update/{placeName}")
-    public PlaceRegisterUpdateDto update(String updatePlaceName, PlaceRegisterUpdateDto updatePlace){
+    public PlaceViewDto update(@PathVariable String placeName, PlaceRegisterUpdateDto updateInfo){
 
-        Place place = placeService.findPlace(updatePlaceName);
+        Place place = placeService.findPlace(placeName);
 
-        placeService.update(place, updatePlace);
-        return updatePlace;
+        placeService.update(place, updateInfo);
+
+        PlaceViewDto returnDto = new PlaceViewDto(place);
+
+        return returnDto;
+    }
+
+    @DeleteMapping("/delete/{placeName}")
+    public String delete(@PathVariable String placeName){
+        placeService.delete(placeName);
+        return "success";
     }
 }
