@@ -37,7 +37,7 @@ public class Place {
     private float latitude;
 
     @OneToOne(mappedBy = "place")
-    private Plan plan;
+    private Schedule schedule;
 
     @OneToMany(mappedBy = "place")
     private List<Review> place_reviews = new ArrayList<>();
@@ -47,9 +47,6 @@ public class Place {
 
     @OneToMany(mappedBy = "place", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<User_Like> place_like_member = new ArrayList<>();
-
-    @OneToMany(mappedBy = "place")
-    private List<Schedule> place_schedule = new ArrayList<>();
 
     public void saveAndUpdate(PlaceRegisterUpdateDto dto) {
         this.placeName = dto.getPlaceName();

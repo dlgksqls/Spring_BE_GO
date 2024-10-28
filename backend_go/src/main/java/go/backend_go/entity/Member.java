@@ -29,7 +29,7 @@ public class Member {
     private List<Review> member_reviews = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<Schedule> member_schedules = new ArrayList<>();
+    private List<Plan> member_plan= new ArrayList<>();
 
     public void join(MemberJoinDto dto){
         this.loginId = dto.getLoginId();
