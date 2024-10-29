@@ -19,7 +19,7 @@ public class PlanController {
 
     private final PlanService planService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public List<PlanViewDto> viewAll(){
         return planService.findAll();
     }

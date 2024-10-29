@@ -17,7 +17,7 @@ public class ScheduleController {
 
     private final ScheduleService scheduleService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public List<ScheduleViewDto> viewAll(){
         return scheduleService.viewAll();
     }

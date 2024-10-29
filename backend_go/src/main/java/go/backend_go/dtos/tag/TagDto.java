@@ -7,7 +7,7 @@ import lombok.Data;
 public class TagDto {
     private String tagName;
 
-    public TagDto(Tag tag) {
-        this.tagName = tag.getTagName();
+    public TagDto(String tagName) {
+        this.tagName = tagName;
     }
 }

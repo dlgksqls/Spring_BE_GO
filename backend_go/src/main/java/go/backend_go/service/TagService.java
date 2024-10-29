@@ -21,12 +21,12 @@ public class TagService {
 
         Tag findTag = tagRepository.findByTagName(tagDto.getTagName());
 
-        Tag saveTag = new Tag();
-        saveTag.saveTag(tagDto);
-
         if (findTag != null){
             return;
         }
+
+        Tag saveTag = new Tag();
+        saveTag.saveTag(tagDto);
 
         tagRepository.save(saveTag);
     }
@@ -36,8 +36,10 @@ public class TagService {
         List<TagDto> returnTag = new ArrayList<>();
 
         for (Tag tag : allTag) {
-            TagDto dto = new TagDto(tag);
-            returnTag.add(dto);
+            if (tag != null) {
+                TagDto dto = new TagDto(tag.getTagName());
+                returnTag.add(dto);
+            }
         }
         return returnTag;
     }

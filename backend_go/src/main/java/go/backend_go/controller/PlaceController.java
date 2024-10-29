@@ -21,7 +21,7 @@ public class PlaceController {
     private final PlaceService placeService;
     private final PlaceTagService placeTagService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public List<PlaceViewDto> viewPlaces(){
         return placeService.findAll();
     }
@@ -42,7 +42,7 @@ public class PlaceController {
             return HttpStatus.CONFLICT;
         }
 
-        placeTagService.savePlaceTag(savePlace, newPlace.getPlace_tag());
+        //placeTagService.savePlaceTag(savePlace, newPlace.getPlace_tag());
 
         return HttpStatus.CREATED;
     }

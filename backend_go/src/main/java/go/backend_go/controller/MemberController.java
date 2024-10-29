@@ -20,7 +20,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public List<MemberDetailDto> members(){
         List<MemberDetailDto> members = memberService.viewMembersDto();
         return members;
