@@ -15,12 +15,17 @@ import java.util.List;
 public class PlanViewDto {
 
     private String planName;
-    private Member member;
+    private String member;
+    private List<PlanDto> plans;
     private List<Schedule> schedules;
 
     public PlanViewDto(Plan plan) {
+
+        PlanDto userPlan = new PlanDto();
+
         this.planName = plan.getPlanName();
-        this.member = plan.getMember();
+        this.member = plan.getMember().getUsername();
+        this.plans = userPlan.viewAllPlans(plan.getMember());
         this.schedules = plan.getSchedules();
     }
 }

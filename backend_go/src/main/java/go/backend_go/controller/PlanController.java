@@ -26,10 +26,10 @@ public class PlanController {
 
     @PostMapping("/save")
     public PlanViewDto savePlan(PlanRegisterDto dto){
-
-        Plan plan = new Plan();
-
         Plan createPlan = planService.save(dto);
-        return planService.save(dto);
+
+        PlanViewDto returnDto = new PlanViewDto(createPlan);
+
+        return returnDto;
     }
 }

@@ -13,9 +13,9 @@ public class PlanRegisterDto {
     private Member member;
     private List<Schedule> schedules;
 
-    public PlanRegisterDto(Plan plan) {
-        this.planName = plan.getPlanName();
-        this.member = plan.getMember();
-        this.schedules = plan.getSchedules();
+    public PlanRegisterDto(String planName, Member member, List<Schedule> schedules) {
+        this.planName = planName;
+        this.member = member;
+        this.schedules = schedules;
     }
 }

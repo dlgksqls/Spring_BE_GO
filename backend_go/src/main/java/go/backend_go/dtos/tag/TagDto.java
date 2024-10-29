@@ -10,10 +10,4 @@ public class TagDto {
     public TagDto(Tag tag) {
         this.tagName = tag.getTagName();
     }
-
-    public TagDto(String tagName) {
-    }
-
-    public TagDto() {
-    }
 }

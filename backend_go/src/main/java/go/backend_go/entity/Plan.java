@@ -32,6 +32,8 @@ public class Plan {
     }
 
     private void updateSchedules(List<Schedule> schedules) {
-        this.schedules.addAll(schedules);
+        if (schedules != null){
+            this.schedules.addAll(schedules);
+        }
     }
 }
