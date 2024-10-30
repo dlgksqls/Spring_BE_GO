@@ -1,5 +1,6 @@
 package go.backend_go.entity;
 
+import go.backend_go.dtos.schedule.ScheduleRegisterDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -26,4 +27,12 @@ public class Schedule {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "plan_id")
     private Plan plan;
+
+    public void makeSchedule(ScheduleRegisterDto dto){
+        this.name = dto.getName();
+        this.startDate = dto.getStartDate();
+        this.endDate = dto.getEndDate();
+        this.place = dto.getPlace();
+        this.plan= dto.getPlan();
+    }
 }

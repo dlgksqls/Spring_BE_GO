@@ -1,12 +1,11 @@
 package go.backend_go.controller;
 
+import go.backend_go.dtos.schedule.ScheduleRegisterDto;
 import go.backend_go.dtos.schedule.ScheduleViewDto;
+import go.backend_go.entity.Schedule;
 import go.backend_go.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,7 +22,17 @@ public class ScheduleController {
     }
 
     @PostMapping("/save")
-    public ScheduleViewDto save(){
-        return null;
+    public ScheduleViewDto save(ScheduleRegisterDto dto){
+
+        Schedule schedule = new Schedule();
+
+        return scheduleService.save(schedule, dto);
+    }
+
+    @DeleteMapping("/delete")
+    public String delete(Long scheduleId){
+
+        scheduleService.delete(scheduleId);
+        return "성공";
     }
 }

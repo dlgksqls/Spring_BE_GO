@@ -1,5 +1,6 @@
 package go.backend_go.service;
 
+import go.backend_go.dtos.schedule.ScheduleRegisterDto;
 import go.backend_go.dtos.schedule.ScheduleViewDto;
 import go.backend_go.entity.Schedule;
 import go.backend_go.repository.ScheduleRepository;
@@ -24,5 +25,20 @@ public class ScheduleService {
             returnDto.add(dto);
         }
         return returnDto;
+    }
+
+    public ScheduleViewDto save(Schedule schedule, ScheduleRegisterDto dto) {
+        schedule.makeSchedule(dto);
+
+        scheduleRepository.save(schedule);
+
+        ScheduleViewDto returnDto = new ScheduleViewDto(schedule);
+
+        return returnDto;
+    }
+
+    public void delete(Long scheduleId) {
+
+        scheduleRepository.deleteById(scheduleId);
     }
 }

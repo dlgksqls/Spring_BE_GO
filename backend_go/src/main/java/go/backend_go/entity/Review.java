@@ -1,5 +1,6 @@
 package go.backend_go.entity;
 
+import go.backend_go.dtos.review.ReviewRegisterDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
@@ -25,4 +26,13 @@ public class Review {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "place_id")
     private Place place;
+
+    public void createReview(ReviewRegisterDto dto){
+
+        this.content = dto.getContent();
+        this.score = dto.getScore();
+        this.created_at = dto.getCreated_at();
+        this.member = dto.getMember();
+        this.place = dto.getPlace();
+    }
 }
