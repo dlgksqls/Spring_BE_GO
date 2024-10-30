@@ -3,6 +3,7 @@ package go.backend_go.service;
 import go.backend_go.dtos.member.MemberDetailDto;
 import go.backend_go.dtos.member.MemberJoinDto;
 import go.backend_go.entity.Member;
+import go.backend_go.exception.NoSuchMemberException;
 import go.backend_go.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,9 @@ public class MemberService {
     public MemberDetailDto findMemberDto(String loginId){
 
         Member findMember = memberRepository.findByLoginId(loginId);
+        if (findMember == null){
+            throw new NoSuchMemberException();
+        }
         MemberDetailDto returnMember = new MemberDetailDto(findMember);
 
         return returnMember;

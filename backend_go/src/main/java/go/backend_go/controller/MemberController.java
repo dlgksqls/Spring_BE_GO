@@ -4,9 +4,12 @@ import go.backend_go.dtos.member.MemberDetailDto;
 import go.backend_go.dtos.member.MemberFixedDto;
 import go.backend_go.dtos.member.MemberJoinDto;
 import go.backend_go.entity.Member;
+import go.backend_go.exception.NoSuchMemberException;
 import go.backend_go.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/member")
 @RequiredArgsConstructor
+@Slf4j
 public class MemberController {
 
     private final MemberService memberService;
@@ -27,9 +31,15 @@ public class MemberController {
     }
 
     @GetMapping("/{loginId}")
-    public MemberDetailDto findMemberByPath(@PathVariable String loginId){
-        MemberDetailDto findMember = memberService.findMemberDto(loginId);
-        return findMember;
+    public ResponseEntity<MemberDetailDto> findMemberByPath(@PathVariable String loginId){
+        try {
+            MemberDetailDto findMember = memberService.findMemberDto(loginId);
+            return ResponseEntity.ok(findMember);
+        } catch (NoSuchMemberException e){
+            log.info("exception : {}",e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(null);
+        }
     }
 
     @Transactional // 변경감지를 위해서 변경 대상 조회한 후 하나의 트랜젝션안에서 수정 진행함
