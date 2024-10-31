@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -30,20 +31,12 @@ public class MemberService {
         return returnMembers;
     }
 
-    public MemberDetailDto findMemberDto(String loginId){
-
-        Member findMember = memberRepository.findByLoginId(loginId);
-        if (findMember == null){
-            throw new NoSuchMemberException();
-        }
-        MemberDetailDto returnMember = new MemberDetailDto(findMember);
-
-        return returnMember;
-    }
-
     public Member findMember(String logId){
 
         Member findMember = memberRepository.findByLoginId(logId);
+        if (findMember == null){
+            throw new NoSuchElementException();
+        }
         return findMember;
     }
 
@@ -57,4 +50,15 @@ public class MemberService {
         memberRepository.save(member);
         return true;
     }
+
+//    public MemberDetailDto findMemberDto(String loginId){
+//
+//        Member findMember = memberRepository.findByLoginId(loginId);
+//        if (findMember == null){
+//            throw new NoSuchElementException();
+//        }
+//        MemberDetailDto returnMember = new MemberDetailDto(findMember);
+//
+//        return returnMember;
+//    }
 }

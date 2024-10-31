@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/member")
@@ -31,33 +32,43 @@ public class MemberController {
     }
 
     @GetMapping("/{loginId}")
-    public ResponseEntity<MemberDetailDto> findMemberByPath(@PathVariable String loginId){
+    public ResponseEntity<?> findMemberByPath(@PathVariable String loginId){
         try {
-            MemberDetailDto findMember = memberService.findMemberDto(loginId);
-            return ResponseEntity.ok(findMember);
-        } catch (NoSuchMemberException e){
-            log.info("exception : {}",e.getMessage());
+            Member findMember = memberService.findMember(loginId);
+            MemberDetailDto returnDto = new MemberDetailDto(findMember);
+            return ResponseEntity.ok(returnDto);
+        } catch (NoSuchElementException e){
+            log.error("exception : {}",e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(null);
+                    .body("해당 회원을 찾을 수 없습니다.");
         }
     }
 
     @Transactional // 변경감지를 위해서 변경 대상 조회한 후 하나의 트랜젝션안에서 수정 진행함
     @PostMapping("/fix/{loginId}")
-    public MemberDetailDto fixMemberByPath(@PathVariable String loginId, MemberFixedDto dto){
-        Member fixedMember = memberService.findMember(loginId);
+    public ResponseEntity<?> fixMemberByPath(@PathVariable String loginId, MemberFixedDto dto){
 
-        fixedMember.update(dto);
-        //memberService.save(fixedMember);
-
-        MemberDetailDto returnMember = new MemberDetailDto(fixedMember);
-        return returnMember;
+        try {
+            Member fixedMember = memberService.findMember(loginId);
+            fixedMember.update(dto);
+            MemberDetailDto returnMember = new MemberDetailDto(fixedMember);
+            return ResponseEntity.ok(returnMember);
+        } catch (NoSuchElementException e){
+            log.error("exception : {}",e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("해당 회원을 찾을 수 없습니다.");
+        } catch (IllegalArgumentException e){
+            log.error("exception : {}",e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(e.getMessage());
+        }
     }
 
     @PostMapping("/findMemberPost")
     public MemberDetailDto findMemberDto(String loginId){
-        MemberDetailDto findMember = memberService.findMemberDto(loginId);
-        return findMember;
+        Member findMember = memberService.findMember(loginId);
+        MemberDetailDto returnDto = new MemberDetailDto(findMember);
+        return returnDto;
     }
 
     @PostMapping("/join")
