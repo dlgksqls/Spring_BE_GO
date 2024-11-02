@@ -30,7 +30,7 @@ public class ReviewController {
         return reviewService.save(review, dto);
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping("")
     public String delete(Long reviewId){
 
         reviewService.delete(reviewId);

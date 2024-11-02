@@ -21,7 +21,7 @@ public class ScheduleController {
         return scheduleService.viewAll();
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public ScheduleViewDto save(ScheduleRegisterDto dto){
 
         Schedule schedule = new Schedule();
@@ -29,7 +29,7 @@ public class ScheduleController {
         return scheduleService.save(schedule, dto);
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping("")
     public String delete(Long scheduleId){
 
         scheduleService.delete(scheduleId);

@@ -49,13 +49,13 @@ public class MemberController {
         }
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<?> register(MemberJoinDto dto){
         try {
             Member member = new Member();
 
-            boolean isSave = memberService.save(member, dto);
-            return ResponseEntity.ok(dto);
+            MemberDetailDto returnDto = memberService.save(member, dto);
+            return ResponseEntity.ok(returnDto);
         } catch (IllegalArgumentException e){
             log.error("exception = {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)

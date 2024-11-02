@@ -43,20 +43,25 @@ public class MemberService {
         return findMember;
     }
 
-    public boolean save(Member member, MemberJoinDto dto){
+    public MemberDetailDto save(Member member, MemberJoinDto dto){
         member.join(dto);
-        Member findMember = memberRepository.findByLoginId(member.getLoginId());
 
-        if (findMember != null){
-            return false;
-        }
+        duplicatedMemberCheck(dto.getLoginId());
+
         memberRepository.save(member);
-        return true;
+
+        MemberDetailDto returnDto = new MemberDetailDto(member);
+        return returnDto;
     }
 
-//    public boolean duplicatedMemberCheck(String memberId){
-//
-//    }
+    public boolean duplicatedMemberCheck(String memberId){
+        Member saveMember = memberRepository.findByLoginId(memberId);
+
+        if (saveMember != null){
+            throw new IllegalArgumentException("중복된 ID가 존재합니다.");
+        }
+        return true;
+    }
 
 //    public MemberDetailDto findMemberDto(String loginId){
 //

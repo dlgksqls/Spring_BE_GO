@@ -31,7 +31,7 @@ public class PlaceController {
         return placeService.findPlaceDto(placeName);
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public HttpStatus save(PlaceRegisterUpdateDto newPlace){
 
         Place place = new Place();
