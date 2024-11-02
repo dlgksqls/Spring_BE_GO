@@ -4,7 +4,6 @@ import go.backend_go.dtos.member.MemberDetailDto;
 import go.backend_go.dtos.member.MemberFixedDto;
 import go.backend_go.dtos.member.MemberJoinDto;
 import go.backend_go.entity.Member;
-import go.backend_go.exception.NoSuchMemberException;
 import go.backend_go.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +17,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("/member")
+@RequestMapping("/members")
 @RequiredArgsConstructor
 @Slf4j
 public class MemberController {
@@ -26,9 +25,15 @@ public class MemberController {
     private final MemberService memberService;
 
     @GetMapping("")
-    public List<MemberDetailDto> members(){
-        List<MemberDetailDto> members = memberService.viewMembersDto();
-        return members;
+    public ResponseEntity<?> members(){
+        try {
+            List<MemberDetailDto> members = memberService.viewMembersDto();
+            return ResponseEntity.ok(members);
+        } catch (NoSuchElementException e){
+            log.error("exception : {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("회원 리스트가 비어있어 불러올 수 없습니다.");
+        }
     }
 
     @GetMapping("/{loginId}")
@@ -44,10 +49,23 @@ public class MemberController {
         }
     }
 
-    @Transactional // 변경감지를 위해서 변경 대상 조회한 후 하나의 트랜젝션안에서 수정 진행함
-    @PostMapping("/fix/{loginId}")
-    public ResponseEntity<?> fixMemberByPath(@PathVariable String loginId, MemberFixedDto dto){
+    @PostMapping("/")
+    public ResponseEntity<?> register(MemberJoinDto dto){
+        try {
+            Member member = new Member();
 
+            boolean isSave = memberService.save(member, dto);
+            return ResponseEntity.ok(dto);
+        } catch (IllegalArgumentException e){
+            log.error("exception = {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(e.getMessage());
+        }
+    }
+
+    @Transactional // 변경감지를 위해서 변경 대상 조회한 후 하나의 트랜젝션안에서 수정 진행함
+    @PatchMapping("/{loginId}")
+    public ResponseEntity<?> fixMemberByPath(@PathVariable String loginId, MemberFixedDto dto){
         try {
             Member fixedMember = memberService.findMember(loginId);
             fixedMember.update(dto);
@@ -65,23 +83,9 @@ public class MemberController {
     }
 
     @PostMapping("/findMemberPost")
-    public MemberDetailDto findMemberDto(String loginId){
+    public MemberDetailDto findMemberDto(String loginId) {
         Member findMember = memberService.findMember(loginId);
         MemberDetailDto returnDto = new MemberDetailDto(findMember);
         return returnDto;
     }
-
-    @PostMapping("/join")
-    public HttpStatus register(MemberJoinDto dto){
-        Member member = new Member();
-
-        boolean isSave = memberService.save(member, dto);
-
-        if (!isSave){
-            // 아이디가 중복됨 == 충돌?
-            return HttpStatus.CONFLICT;
-        }
-        return HttpStatus.CREATED;
-    }
-
 }

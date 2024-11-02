@@ -9,5 +9,4 @@ public class BackendGoApplication {
     public static void main(String[] args) {
         SpringApplication.run(BackendGoApplication.class, args);
     }
-
 }

@@ -3,7 +3,6 @@ package go.backend_go.service;
 import go.backend_go.dtos.member.MemberDetailDto;
 import go.backend_go.dtos.member.MemberJoinDto;
 import go.backend_go.entity.Member;
-import go.backend_go.exception.NoSuchMemberException;
 import go.backend_go.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -24,6 +23,10 @@ public class MemberService {
         List<MemberDetailDto> returnMembers = new ArrayList<>();
 
         for (Member member : members) {
+            if (members.isEmpty()){
+                throw new NoSuchElementException();
+            }
+
             MemberDetailDto dto = new MemberDetailDto(member);
             returnMembers.add(dto);
         }
@@ -50,6 +53,10 @@ public class MemberService {
         memberRepository.save(member);
         return true;
     }
+
+//    public boolean duplicatedMemberCheck(String memberId){
+//
+//    }
 
 //    public MemberDetailDto findMemberDto(String loginId){
 //

@@ -24,7 +24,7 @@ public class PlanController {
         return planService.findAll();
     }
 
-    @PostMapping("/save")
+    @PostMapping("/")
     public PlanViewDto savePlan(PlanRegisterDto dto){
         Plan createPlan = planService.save(dto);
 

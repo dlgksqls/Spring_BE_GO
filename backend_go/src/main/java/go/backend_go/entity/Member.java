@@ -41,6 +41,16 @@ public class Member {
         this.username = dto.getUsername();
         this.email = dto.getEmail();
         this.joinDate = LocalDateTime.now();
+
+        if (dto.getLoginId() == null){
+            throw new IllegalArgumentException("ID는 필수입니다.");
+        }
+        else if (dto.getPassword() == null){
+            throw new IllegalArgumentException("PASSWORD는 필수입니다.");
+        }
+        else if (dto.getEmail() == null){
+            throw new IllegalArgumentException("EMAIL은 필수입니다.");
+        }
     }
 
     public void update(MemberFixedDto dto){

@@ -31,7 +31,7 @@ public class PlaceController {
         return placeService.findPlaceDto(placeName);
     }
 
-    @PostMapping("/join")
+    @PostMapping("/")
     public HttpStatus save(PlaceRegisterUpdateDto newPlace){
 
         Place place = new Place();
@@ -47,7 +47,7 @@ public class PlaceController {
         return HttpStatus.CREATED;
     }
 
-    @PostMapping("/update/{placeName}")
+    @PatchMapping("/{placeName}")
     public PlaceViewDto update(@PathVariable String placeName, PlaceRegisterUpdateDto updateInfo){
 
         Place place = placeService.findPlace(placeName);
@@ -59,7 +59,7 @@ public class PlaceController {
         return returnDto;
     }
 
-    @DeleteMapping("/delete/{placeName}")
+    @DeleteMapping("/{placeName}")
     public String delete(@PathVariable String placeName){
         placeService.delete(placeName);
         return "success";
