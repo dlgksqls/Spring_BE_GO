@@ -19,6 +19,8 @@ public class Review {
     private int score;
     private LocalDateTime created_at;
 
+    private String reviewMemberId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
@@ -32,7 +34,13 @@ public class Review {
         this.content = dto.getContent();
         this.score = dto.getScore();
         this.created_at = dto.getCreated_at();
+        this.reviewMemberId = dto.getMember().getLoginId();
         this.member = dto.getMember();
         this.place = dto.getPlace();
+    }
+
+    public void deleteMember(){
+        this.member = null;
+        this.reviewMemberId = "알 수 없는 사용자";
     }
 }

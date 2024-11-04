@@ -63,6 +63,11 @@ public class MemberService {
         return true;
     }
 
+    public void deleteMember(String memberId){
+        Member findMember = memberRepository.findByLoginId(memberId);
+        memberRepository.delete(findMember);
+    }
+
 //    public MemberDetailDto findMemberDto(String loginId){
 //
 //        Member findMember = memberRepository.findByLoginId(loginId);

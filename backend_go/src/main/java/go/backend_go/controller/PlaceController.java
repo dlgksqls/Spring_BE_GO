@@ -26,11 +26,6 @@ public class PlaceController {
         return placeService.findAll();
     }
 
-    @GetMapping("/{placeName}")
-    public PlaceViewDto viewPlace(@PathVariable String placeName){
-        return placeService.findPlaceDto(placeName);
-    }
-
     @PostMapping("")
     public HttpStatus save(PlaceRegisterUpdateDto newPlace){
 
@@ -45,6 +40,11 @@ public class PlaceController {
         //placeTagService.savePlaceTag(savePlace, newPlace.getPlace_tag());
 
         return HttpStatus.CREATED;
+    }
+
+    @GetMapping("/{placeName}")
+    public PlaceViewDto viewPlace(@PathVariable String placeName){
+        return placeService.findPlaceDto(placeName);
     }
 
     @PatchMapping("/{placeName}")

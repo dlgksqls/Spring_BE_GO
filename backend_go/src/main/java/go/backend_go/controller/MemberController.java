@@ -4,6 +4,7 @@ import go.backend_go.dtos.member.MemberDetailDto;
 import go.backend_go.dtos.member.MemberFixedDto;
 import go.backend_go.dtos.member.MemberJoinDto;
 import go.backend_go.entity.Member;
+import go.backend_go.entity.Review;
 import go.backend_go.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,19 +37,6 @@ public class MemberController {
         }
     }
 
-    @GetMapping("/{loginId}")
-    public ResponseEntity<?> findMemberByPath(@PathVariable String loginId){
-        try {
-            Member findMember = memberService.findMember(loginId);
-            MemberDetailDto returnDto = new MemberDetailDto(findMember);
-            return ResponseEntity.ok(returnDto);
-        } catch (NoSuchElementException e){
-            log.error("exception : {}",e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("해당 회원을 찾을 수 없습니다.");
-        }
-    }
-
     @PostMapping("")
     public ResponseEntity<?> register(MemberJoinDto dto){
         try {
@@ -60,6 +48,19 @@ public class MemberController {
             log.error("exception = {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{loginId}")
+    public ResponseEntity<?> findMemberByPath(@PathVariable String loginId){
+        try {
+            Member findMember = memberService.findMember(loginId);
+            MemberDetailDto returnDto = new MemberDetailDto(findMember);
+            return ResponseEntity.ok(returnDto);
+        } catch (NoSuchElementException e){
+            log.error("exception : {}",e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("해당 회원을 찾을 수 없습니다.");
         }
     }
 
@@ -87,5 +88,20 @@ public class MemberController {
         Member findMember = memberService.findMember(loginId);
         MemberDetailDto returnDto = new MemberDetailDto(findMember);
         return returnDto;
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteMember(String loginId){
+        Member findMember = memberService.findMember(loginId);
+        List<Review> findMemberMemberReviews = findMember.getMember_reviews();
+        if (!findMemberMemberReviews.isEmpty()){
+            for (Review review : findMemberMemberReviews) {
+                review.deleteMember();
+            }
+        }
+
+        memberService.deleteMember(loginId);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body("삭제 완료.");
     }
 }
