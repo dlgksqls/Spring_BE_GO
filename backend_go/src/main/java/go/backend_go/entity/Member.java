@@ -35,6 +35,9 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<Plan> member_plan= new ArrayList<>();
 
+    @OneToMany(mappedBy = "member")
+    private List<User_Like> place_like_member = new ArrayList<>();
+
     public void join(MemberJoinDto dto){
         this.loginId = dto.getLoginId();
         this.password = dto.getPassword();

@@ -6,6 +6,15 @@ import lombok.Getter;
 @Entity @Getter
 public class User_Like {
 
+    public User_Like() {
+
+    }
+
+    public User_Like(Member member, Place place) {
+        this.member = member;
+        this.place = place;
+    }
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 

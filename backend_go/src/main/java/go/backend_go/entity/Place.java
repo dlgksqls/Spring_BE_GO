@@ -36,16 +36,18 @@ public class Place {
     // 위도
     private float latitude;
 
+    private int likeNum= 0;
+
     @OneToOne(mappedBy = "place")
     private Schedule schedule;
 
     @OneToMany(mappedBy = "place")
     private List<Review> place_reviews = new ArrayList<>();
 
-    @OneToMany(mappedBy = "place", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "place")
     private List<Place_Tag> place_tag = new ArrayList<>();
 
-    @OneToMany(mappedBy = "place", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "place")
     private List<User_Like> place_like_member = new ArrayList<>();
 
     public void saveAndUpdate(PlaceRegisterUpdateDto dto) {
@@ -66,5 +68,9 @@ public class Place {
             Place_Tag placeTag = new Place_Tag(this, tag);
             this.place_tag.add(placeTag);
         }
+    }
+
+    public void likePlace(){
+        this.likeNum ++;
     }
 }
