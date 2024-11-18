@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface PlaceTagRepository extends JpaRepository<Place_Tag, Long> {
 
-    @Query(value = "select placeTag.place " +
-            "from Place_Tag placeTag " +
-            "where placeTag.tag.tagName = :tagName")
+    @Query(value = "select placeTag.place " + "from Place_Tag placeTag " + "where placeTag.tag.tagName = :tagName")
     List<Place> findAllByTagName(String tagName);
 }

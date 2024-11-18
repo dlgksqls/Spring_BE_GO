@@ -32,14 +32,14 @@ public class MemberLikeController {
     public ResponseEntity<?> findMemberLike(String memberId){
         try {
             Member findMember = memberService.findMember(memberId);
-            List<memberLikeViewDto> memberlikes = new ArrayList<>();
+            List<memberLikeViewDto> memberLikes = new ArrayList<>();
 
             for (User_Like userLike : findMember.getPlace_like_member()) {
                 memberLikeViewDto dto = new memberLikeViewDto(userLike.getMember(), userLike.getPlace());
-                memberlikes.add(dto);
+                memberLikes.add(dto);
             }
 
-            return ResponseEntity.ok(memberlikes);
+            return ResponseEntity.ok(memberLikes);
 
         } catch (NoSuchElementException e){
             log.error(e.getMessage());
@@ -67,6 +67,16 @@ public class MemberLikeController {
         Place findPlace = placeService.findPlace(placeName);
 
         memberLikeViewDto returnDto = memberLikeService.addLike(findMember, findPlace);
+
+        return ResponseEntity.ok(returnDto);
+    }
+
+    @DeleteMapping("/{placeName}")
+    public ResponseEntity<?> deleteMemberLike(String memberId, @PathVariable String placeName){
+        Member findMember = memberService.findMember(memberId);
+        Place findPlace = placeService.findPlace(placeName);
+
+        memberLikeViewDto returnDto = memberLikeService.deleteLike(findMember, findPlace);
 
         return ResponseEntity.ok(returnDto);
     }

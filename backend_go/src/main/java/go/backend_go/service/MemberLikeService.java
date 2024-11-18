@@ -7,6 +7,7 @@ import go.backend_go.entity.User_Like;
 import go.backend_go.repository.MemberLikeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +24,22 @@ public class MemberLikeService {
         findPlace.likePlace();
 
         memberLikeRepository.save(userLike);
+
+        memberLikeViewDto returnDto = new memberLikeViewDto(findMember, findPlace);
+
+        return returnDto;
+    }
+
+    public memberLikeViewDto deleteLike(Member findMember, Place findPlace){
+
+        User_Like userLike = memberLikeRepository.findByUserNameAndPlaceName(findMember.getId(), findPlace.getId());
+
+        findMember.getPlace_like_member().remove(userLike);
+        findPlace.getPlace_like_member().remove(userLike);
+
+        findPlace.unlikePlace();
+
+        memberLikeRepository.delete(userLike);
 
         memberLikeViewDto returnDto = new memberLikeViewDto(findMember, findPlace);
 

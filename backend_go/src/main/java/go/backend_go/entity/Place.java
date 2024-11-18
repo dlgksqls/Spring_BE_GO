@@ -73,4 +73,8 @@ public class Place {
     public void likePlace(){
         this.likeNum ++;
     }
+
+    public void unlikePlace(){
+        this.likeNum --;
+    }
 }

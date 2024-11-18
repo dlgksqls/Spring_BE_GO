@@ -3,6 +3,8 @@ package go.backend_go.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.Objects;
+
 @Entity @Getter
 public class User_Like {
 
